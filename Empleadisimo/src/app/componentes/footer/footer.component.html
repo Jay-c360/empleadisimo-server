@@ -1,0 +1,63 @@
+<footer *ngIf="show">
+    <div class="ff-div">
+        <div class="ff-list">
+            <span class="title-footer">Soporte</span>
+            <div>
+                <ul>
+                    <li><a>Contactanos</a></li>
+                    <li>Empleadisimo.unah@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="sf-list">
+            <span class="title-footer">Politicas de privacidad</span>
+            <div>
+                <ul>
+                    <li><a class="link-foo" [routerLink]='"footer/politicas"'>Politicas de privacidad</a></li>
+                    <li><a class="link-foo" [routerLink]='"footer/terminos"'>Nuestros terminos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tf-list">
+            <span class="title-footer">Acerca de</span>
+            <div>
+                <ul>
+                    <li><a class="link-foo" [routerLink]='"footer/mision"'>Nuestra mision</a></li>
+                    <li><a class="link-foo" [routerLink]='"footer/vision"'>Nuestra vision</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="df-list">
+        <div class="email-list">
+            <span class="follow">Siguenos en nuestras redes sociales</span>
+            <div>
+                <ul class="container-media">
+                    <li>
+                        <a class="pointer"><img src="../../../assets/svg/facebook.svg" class="svg-socialm"></a>
+                    </li>
+                    <li>
+                        <a class="pointer"><img src="../../../assets/svg/gorjeo.svg" class="svg-socialm"></a>
+                    </li>
+                    <li>
+                        <a class="pointer"><img src="../../../assets/svg/instagram.svg" class="svg-socialm"></a>
+                    </li>
+                    <li>
+                        <a class="pointer"><img src="../../../assets/svg/youtube.svg" class="svg-socialm"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="df-logo">
+            <img src="../../../assets/LOGOS/LOGO_BLANCO_SIN_FONDO.png">
+        </div>
+    </div>
+    <div class="ffr">
+        <div class="footer-items">
+            <a class="link-foo" [routerLink]='"footer/politicas"'><span>Politicas de privacidad</span></a>
+            <a class="link-foo" [routerLink]='"footer/terminos"'><span>Nuestros terminos</span></a>
+            <a class="link-foo" [routerLink]='"footer/mision"'><span>Nuestra mision</span></a>
+            <a class="link-foo" [routerLink]='"footer/vision"'><span>Nuestra vision</span></a>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,334 @@
+<nav #nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" id="sidenav" type="button" (click)="showSidebar()" *ngIf="!!this.usuarioService.isAdminLogged()">
+        <span class="navbar-toggler-icon" style="color: white;">
+        </span>
+      </button>
+    <a class="navbar-brand navbar-brand-admin" href="#" *ngIf="!!this.usuarioService.isAdminLogged()">
+        <img src="/assets/LOGOS/LOGO_BLANCO_BLANCO.png" alt="" width="60">
+        <img src="/assets/LOGOS/LETRA_SOLA_BLANCA.png" alt="" width="200">
+    </a>
+    <a class="navbar-brand" href="#" *ngIf="!this.usuarioService.isAdminLogged()">
+        <img src="/assets/LOGOS/LOGO_BLANCO_BLANCO.png" alt="" width="60">
+        <img src="/assets/LOGOS/LETRA_SOLA_BLANCA.png" alt="" width="200">
+    </a>
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" *ngIf="!this.usuarioService.isAdminLogged()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--Nav general -->
+    <div class="collapse navbar-collapse justify-content-end" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" *ngIf="!this.usuarioService.loggedIn()">
+        <form class="form-inline my-2 my-lg-0" style="color:white">
+
+            <button  class="btn btn-outline-primary my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(login)">Identifícate</button>
+            <button class="btn btn-outline-danger my-2 my-sm-0 mr-2 ml-2" type="button" (click)="open(registro)">Regístrate</button>
+
+        </form>
+    </div>
+
+    <!--Nav de empresa-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" *ngIf="!!this.usuarioService.isCompanyLogged()">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+                <div class="col">
+                  <div ngbDropdown class="d-inline-block">
+                    <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>Publicaciones</a>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button ngbDropdownItem>Recientes</button>
+                      <button ngbDropdownItem>Vencidas</button>
+                      <div class="dropdown-divider"></div>
+                      <button ngbDropdownItem>Historial</button>
+                    </div>
+                  </div>
+                </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">Contratados</a>
+          </li>
+        </ul>
+        <form class="d-flex ml-auto mr-3">
+          <div class="row">
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                <button class="btn mr-2 ml-2 icon-button" id="dropdownBasic2" ngbDropdownToggle (click)="openNotifications()">
+                    <fa-icon [icon]="faBell" [ngClass]="{'custom-btn': nuevaNotificacionC==false, 'custom-new': nuevaNotificacionC==true}"></fa-icon>
+                    <span class="icon-button__badge" *ngIf="this.noLeidoC!=0 && 99 >= this.noLeidoC">{{noLeidoC}}</span>
+                    <span class="icon-button__badge" *ngIf="this.noLeidoC > 99">99+</span>
+                </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-right dropdown-menu-custom">
+                    <div class="row">
+                        <div class="col-6 mr-1 ml-3">
+                            <h2 class="title-notification">Notificaciones</h2>
+                        </div>
+                        <div class="col-5 mr-2 ml-1 mt-2 d-flex justify-content-end">
+                            <a class="item-link">
+                                Mostrar todo
+                            </a>
+                        </div>
+                        <div class="custom-scrollbar">
+                            <div *ngIf="notificacionesC.length == 0">
+                                <div class="d-flex justify-content-center">
+                                    No hay notificaciones :c
+                                </div>
+                            </div>
+                            <div *ngIf="notificacionesC.length != 0">
+                                <div class="card ml-2 mr-2 mb-1" *ngFor="let notification of notificacionesC" [ngClass]="{'no-leido': notification.estado==false, 'card': notification.estado==true}">
+                                    <div class="card-body" (click)="notificacionSeleccionada(notification.idPublicacion)">
+                                        <div class="card-text">
+                                            Tienes un nuevo aplicante en tu publicación <strong>{{notification.titulo}}</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <small>{{notification.fechaAplicacion | slice:0:10}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn custom-btn mr-2 ml-2" id="dropdownBasic3" ngbDropdownToggle><fa-icon [icon]="faCommentDots"></fa-icon></button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">
+                      <div>
+                        Aquí va el chat
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-primary d-flex" id="dropdownBasic1" ngbDropdownToggle>
+                    <img [src]="imgPerfil" style="width: 40px; height: 40px; border-radius: 50%;">
+                    <div class="mt-auto ml-2 mb-auto">
+                        {{usuarioLoggeado.nombre}}
+                    </div>
+                </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu dropdown-menu-right">
+                    <button ngbDropdownItem>Mi perfil</button>
+                    <button ngbDropdownItem>Rubros</button>
+                    <button ngbDropdownItem>Sucursales</button>
+                    <button ngbDropdownItem>Configuraciones</button>
+                    <li><hr class="dropdown-divider"></li>
+                    <button ngbDropdownItem (click)="buttonLogout()">Cerrar sesión</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!--Nav de empleados-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" *ngIf="!!this.usuarioService.isEmployeeLogged()">
+
+        <form class="d-flex ml-auto mr-3">
+          <div class="row">
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                <button class="btn mr-2 ml-2 icon-button" id="dropdownBasic2" ngbDropdownToggle (click)="openNotifications()">
+                        <fa-icon [icon]="faBell"  [ngClass]="{'custom-btn': nuevaNotificacion==false, 'custom-new': nuevaNotificacion==true}"></fa-icon>
+                        <span class="icon-button__badge" *ngIf="this.noLeido!=0 && 99 >= this.noLeido">{{noLeido}}</span>
+                        <span class="icon-button__badge" *ngIf="this.noLeido > 99">99+</span>
+                    </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown-menu dropdown-menu-right dropdown-menu-custom">
+                    <div class="row">
+                        <div class="col-6 mr-1 ml-3">
+                            <h2 class="title-notification">Notificaciones</h2>
+                        </div>
+                        <div class="col-5 mr-2 ml-1 mt-2 d-flex justify-content-end">
+                            <a class="item-link">
+                                Mostrar todo
+                            </a>
+                        </div>
+                        <div class="custom-scrollbar">
+                            <div *ngIf="notificaciones.length == 0">
+                                <div class="d-flex justify-content-center">
+                                    No hay notificaciones :c
+                                </div>
+                            </div>
+                            <div *ngIf="notificaciones.length != 0">
+                                <div class="card ml-2 mr-2 mb-1" *ngFor="let notification of notificaciones" [ngClass]="{'no-leido': notification.estado==false, 'card': notification.estado==true}">
+                                    <div class="card-body" (click)="notificacionSeleccionada(notification._id)">
+                                        <div class="card-tex">
+                                            Nueva oferta de trabajo <strong>{{notification.titulo}}</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <small>{{notification.fechaPublicacion | slice:0:10}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn custom-btn mr-2 ml-2" id="dropdownBasic3" ngbDropdownToggle><fa-icon [icon]="faCommentDots"></fa-icon></button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">
+                      <div>
+                        Aquí va el chat
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div>
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-primary d-flex" id="dropdownBasic1" ngbDropdownToggle>
+                    <img [src]="imgPerfil" style="width: 40px; height: 40px; border-radius: 50%;">
+                    <div class="mt-auto ml-2 mb-auto">
+                        {{usuarioLoggeado.nombre}}
+                    </div>
+                </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu dropdown-menu-right">
+                    <button ngbDropdownItem>Mi perfil</button>
+                    <button ngbDropdownItem>Configuraciones</button>
+                    <li><hr class="dropdown-divider"></li>
+                    <button ngbDropdownItem (click)="buttonLogout()">Cerrar sesión</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+        </form>
+    </div>
+
+    <!--Nav de admin-->
+    <div style="display:contents" *ngIf="!!this.usuarioService.isAdminLogged()">
+        <form class="d-flex ml-auto mr-3">
+          <div class="row">
+            <div>
+                <button class="btn btn-outline-primary" style="font-size: 1rem;" (click)="buttonLogout()">
+                    <fa-icon [icon]="faSignOutAlt"></fa-icon>
+                    Cerrar sesión</button>
+              </div>
+          </div>
+
+        </form>
+    </div>
+</nav>
+
+
+<!--Modales-->
+
+<!--Modal del login-->
+<ng-template #login let-modal>
+    <div class="modal-body">
+        <div class="container-empleador">
+            <ngb-alert type="danger" *ngIf="errorLogin == true">{{message}}</ngb-alert>
+            <div class="titles-container">
+                <img class="image-login" src="../../../assets/LOGOS/LOGO_AZUL.png">
+                <h1 style="font-family: 'Ramabhadra'; color:#054a91">Bienvenido</h1>
+                <h4 style="color:#054a91">Ingresa a tu cuenta</h4>
+            </div>
+            <div class="form-container">
+                <form [formGroup]="formularioLogin" class="form-container mr-5 ml-5">
+                    <div class="container-title">
+                        <div class="d-flex text-align-left">
+                            <label><span>Correo electrónico</span></label>
+                        </div>
+                        <input formControlName="lgCorreo" [ngClass]="{'input-error': (lgCorreo?.invalid && (lgCorreo?.dirty || lgCorreo?.touched))}" type="correo"  class="form-control">
+                        <div *ngIf="lgCorreo?.invalid && (lgCorreo?.dirty || lgCorreo?.touched)" class="error">
+                            <span *ngIf="lgCorreo?.errors?.required">Error, el campo es obligatorio</span>
+                            <span *ngIf="lgCorreo?.errors?.email">Correo inválido</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="d-flex text-align-left">
+                            <label><span>Contraseña</span></label>
+                        </div>
+                        <input formControlName="lgPassword" [ngClass]="{'input-error': (lgPassword?.invalid && (lgPassword?.dirty || lgPassword?.touched))}" type="password"  class="form-control">
+                        <div *ngIf="lgPassword?.invalid && (lgPassword?.dirty || lgPassword?.touched)" class="error">
+                          <span *ngIf="lgPassword?.errors?.required">Error, el campo es obligatorio</span>
+                          <span *ngIf="lgPassword?.errors?.email">Contraseña inválida</span>
+                        </div>
+                        <div class="d-flex justify-content-end mt-1">
+                            <a href=""><span>¿Olvidaste tu contraseña?</span></a>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-outline-secondary justify-content-center" (click)="buttonLogin()" >Iniciar Sesión</button><br>
+                        </div>
+                        <div class="d-flex text-align-left mt-3 mb-2">
+                            <span>¿No tienes cuenta? <a (click)="open(registro)" class="register-link">Regístrate</a></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<!--Modal del registro-->
+<ng-template #registro let-modal>
+    <div class="modal-body">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li [ngbNavItem]="0" style="width:50%">
+                <a ngbNavLink class="nav-login">Empleado</a>
+                <ng-template ngbNavContent>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="1" style="width:50%">
+                <a ngbNavLink class="nav-login">Empresa</a>
+                <ng-template ngbNavContent>
+                </ng-template>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2">
+
+        </div>
+        <div class="content-empleador">
+            <ngb-alert type="success" *ngIf="successRegistro == true">¡Te has registrado exitosamente! Espera unos segundos...</ngb-alert>
+            <ngb-alert type="danger" *ngIf="errorRegistro == true">{{message}}</ngb-alert>
+            <!--
+            <div class="row alert alert-success" *ngIf="registroSuccess">
+
+              </div>-->
+            <div class="row" >
+                <img src="assets/LOGOS/LOGO_AZUL.png"  class="image-login mx-auto" alt="">
+            </div>
+            <div class="row mt-1 mx-auto" style="width:50%">
+                <h1 class="mx-auto" style="margin-bottom: 0; color: #054a91;"><b>Bienvenido</b></h1><br>
+                <div class="col-12 d-flex text-align-center">
+                    <p class="mx-auto" style="margin-top: 0; color: #054a91;">Crear una cuenta </p>
+                </div>
+            </div>
+            <form [formGroup]="formularioRegistro">
+                <div class="row mt-3 ml-5" style="width: 80%;">
+                    <label for="">Correo Electrónico:</label>
+                    <input formControlName="rgCorreo" [ngClass]="{'input-error': (rgCorreo?.invalid && (rgCorreo?.dirty || rgCorreo?.touched))}" class="form-control" type="text" required>
+                    <div *ngIf="rgCorreo?.invalid && (rgCorreo?.dirty || rgCorreo?.touched)" class="error">
+                        <span *ngIf="rgCorreo?.errors?.required">Error, el campo es obligatorio</span>
+                        <span *ngIf="rgCorreo?.errors?.email">Debe ingresar un email</span>
+                    </div>
+                </div>
+                <div class="row my-2 ml-5" style="width: 80%;">
+                    <label for="">Contraseña:</label>
+                    <input formControlName="rgPassword" [ngClass]="{'input-error': (rgPassword?.invalid && (rgPassword?.dirty || rgPassword?.touched))}" class="form-control" type="password" name="">
+                    <div *ngIf="rgPassword?.invalid && (rgPassword?.dirty || rgPassword?.touched)" class="error">
+                        <span *ngIf="rgPassword?.errors?.required">Error, el campo es obligatorio</span>
+                        <span *ngIf="rgPassword?.errors?.minLength">Debe tener un mínimo de 6 caracteres</span>
+                    </div>
+                </div>
+                <div class="row my-2 ml-5" style="width: 80%;">
+                    <label for="">Confirmar Contraseña:</label>
+                    <input formControlName="rgConfPassword" class="form-control" type="password" name="">
+                </div>
+                <div class="row mx-auto mt-4 mb-3" style="width: 50%;">
+                    <button [disabled]="!formularioRegistro.valid" (click)="registrarUsuario()" class="form-control btn btn-primary" type="button">Registrarme</button>
+                </div>
+
+            </form>
+            <div class="row ml-5" style="width: 80%;">
+                <p>¿Ya tienes cuenta?<a class="btn" (click)="open(login)" style="color: #f17300;">Iniciar Sesión</a></p>
+            </div>
+
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,84 @@
+  <div class="home-container-employee">
+    <app-cv></app-cv>
+  </div>
+  
+  <div class="container">
+    <form class="employee-search" style="background-color: #f17300;">
+    <div class="form-group" style="margin-bottom: 0rem;">
+      <div class="row justify-content-center pb-4">
+
+        <div class="col-xl-5 col-md-5 col-12 pl-3 pr-3">
+          <h3>¿Qué buscas?</h3>
+          <div class="input-group flex-nowrap pl-2 pr-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="addon-wrapping"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" class="form-control input-block custom-search" placeholder="Profesión o puesto"  name="filterPosition" [(ngModel)]="filterPosition" spellcheck="false">
+          </div>
+        </div>
+
+        <div class="col-xl-5 col-md-5 col-12 pl-3 pr-3">
+          <h3>Ubicación</h3>
+          <div class="input-group flex-nowrap pl-2 pr-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="addon-wrapping"><i class="fa fa-map-marker-alt bg-inverse"></i></span>
+            </div>
+            <input type="text" class="form-control input-block" placeholder="Departamento o Ciudad" name="filterLocation" [(ngModel)]="filterLocation" spellcheck="false">
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </form>
+  </div>
+
+
+<!--Publicaciones-->
+
+<div class="container">
+
+  <div class="row justify-content-center  mt-5 mb-5"  *ngIf="publicaciones.length==0">
+    <p style="font-family: 'Raleway semibold'; font-size: 1rem;">
+      No tenemos publicaciones de trabajo disponibles :(
+    </p>
+  </div>
+  <div class="row justify-content-center" *ngIf="publicaciones.length!=0">
+    <mat-paginator [length]="publicaciones.length" [pageSize]="page_size"
+      [pageSizeOptions]="pageSizeOptions" (page)="handlePage($event)" showFirstLastButtons>
+    </mat-paginator>
+    <div class="col-xl-12 mb-1 mt-1 h-50" *ngFor="let publicacion of publicaciones | filterLocation: filterLocation | filterPosition : filterPosition | pagination:page_size:page_number; let i = index;">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-10 col-8">
+              <h2 class="card-title">{{publicacion.titulo}}</h2>
+            </div>
+            <div class="col-xl-2 col-4 text-right">
+               <h2>L {{publicacion.cantidadPago}}</h2></div>
+          </div>
+          <p class="card-text">{{publicacion.descripcion}}</p>
+          <div class="mb-2 mt-2 d-flex">
+            <div class="icon">
+              <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+            </div>
+            {{publicacion.ubicacion.ciudad}}, {{publicacion.ubicacion.departamento}}
+            , {{publicacion.ubicacion.pais}}
+          </div>
+          <div class="mb-2 mt-2 d-flex">
+            <div class="icon">
+              <fa-icon [icon]="faCalendarCheck"></fa-icon>
+            </div>
+            Publicado el {{publicacion.fechaPublicacion | slice:0:10}}
+          </div>
+          <div class="d-flex justify-content-end">
+            <button [disabled]="publicacion['aplico']" class="btn btn-danger mr-3"
+              (click)="updateApplyPostUser(publicacion._id, i)" (click)="obtenerPublicaciones()">Aplicar
+            </button>
+            <a class="btn btn-primary mr-2" (click)="homepage(publicacion.idEmpresa)">Ver más</a>
+            <a (click)="chat(publicacion)" class="btn btn-primary ml-2">Chat</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

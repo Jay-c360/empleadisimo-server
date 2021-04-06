@@ -1,0 +1,177 @@
+.card{
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    height: 90px;
+}
+
+.card:hover{
+    background-color: #f5f5f5;
+    cursor:pointer
+}
+
+.card-text{
+    height: 40px; 
+    position: relative; 
+    overflow: hidden;
+}
+
+.custom-btn{
+    color: white;
+    font-size: 1.6rem;
+}
+
+.custom-new{
+    color:#f17300;
+    font-size: 1.6rem;
+}
+
+.custom-scrollbar{
+    width: 92% !important;
+    height: 350px !important;
+    margin-left: 1rem;
+    overflow: auto;
+}
+
+.custom-btn:hover{
+    color: #f17300;
+}
+
+.dropdown-item{
+    color: #054a91;
+    font-family: 'Raleway medium';
+}
+
+.dropdown-toggle::after{
+    content: unset !important;
+}
+
+.dropdown-menu-custom.show{
+    width: 400px !important;
+}
+
+.error{
+    padding: 5px;
+    margin:5px;  
+    margin-top: 0px;
+    font-size: 1rem;
+    border-radius: 5px;
+    color: red;
+  }
+  
+  .input-error{
+      
+      border: 2px solid red;
+  }
+
+.icon-button{
+
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}  
+
+.icon-button__badge {
+    font-size: 0.9rem;
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    min-width: 20px;
+    padding: 2px;
+    padding-bottom: 6px;
+    height: 20px;
+    background: #f17300;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-right: 4px;
+  }
+  
+
+.item-link{
+    text-decoration: none;
+}
+
+.item-link:hover{
+    cursor:pointer
+}
+
+.navbar-brand{
+    color:white;
+}
+
+.nav-login{
+    color: #054a91 !important;
+    text-align: center;
+    font-family: 'Raleway semibold';
+}
+
+.nav-link{
+    font-size: 1rem;
+}
+
+.no-leido{
+    background-color: #f4f4f4
+}
+
+.register-link{
+    color: #f17300;
+    font-size: 1rem;
+}
+
+.register-link:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    
+}
+  
+.title-notification{
+    color:#f17300;
+    font-family: 'Ramabhadra';
+    font-size: 1.5rem;
+}
+
+/*Scroll personalizado*/
+
+.custom-scrollbar::-webkit-scrollbar{
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb{
+    background: #f17300;
+    border-radius: 5px;
+}
+
+.titles-container{
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    display: flex;
+}
+
+.image-login {
+    height: auto;
+    width: 100px;
+    margin: auto;
+}
+
+@media(max-width:1332px){
+    .navbar-brand-admin{
+        display: inline-block;
+        padding-top: .3125rem;
+        padding-bottom: .3125rem;
+        margin-right: 1rem;
+        margin-left: auto;
+        font-size: 1.25rem;
+        line-height: inherit;
+        white-space: nowrap;
+    }
+
+    #sidenav{
+        display: block;
+    }
+}
