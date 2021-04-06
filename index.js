@@ -19,8 +19,8 @@ var io = require('socket.io')(server, {
     }
 });
 
-server.listen(3000, () => {
-    console.log(`Example app listening on 3000 port!`)
+server.listen( process.env.PORT || 5000, () => {
+    console.log(`Example app listening on 5000 port!`)
 });
 
 //Middleware
