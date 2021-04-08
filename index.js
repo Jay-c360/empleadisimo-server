@@ -41,6 +41,6 @@ module.exports = {
 require('./sockets/sockets');
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hello form Empleadisimo Server!');
     res.end();
 });
